@@ -27,6 +27,7 @@ type Server struct {
 	Host	string `json:"host"`
 	Port	string `json:"port"`
 	Domain	string `json:"domain"`
+	SkipVerify bool `json:"skipVerify"`
 }
 type Global struct {
 	Timeout int `json:"timeout"`
@@ -106,7 +107,7 @@ func main() {
 			defer ipConn.Close()
 		}
 		// Configure tls to look at domainName
-		tlsconfig := tls.Config{ServerName: Server.Domain}
+		tlsconfig := tls.Config{ServerName: Server.Domain,InsecureSkipVerify:Server.SkipVerify}
 		// Connect to tls
 		conn:= tls.Client(ipConn, &tlsconfig)
 		defer conn.Close()
