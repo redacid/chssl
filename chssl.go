@@ -76,7 +76,7 @@ func main() {
 		ip, err := net.LookupHost(Server.Host)
 		if err != nil {
 			ipAddress = ipAddress + ":" + Server.Port
-			output = output + "Could not resolve host name " + Server.Host + "\n"
+			output = output + "CRITICAL Could not resolve host name " + Server.Host + "\n"
 			//fmt.Printf("Could not resolve host name, %v.\n\n",Server.Host)
 			switch state {
 			case STATE_OK:
@@ -92,7 +92,7 @@ func main() {
 
 		ipConn,err:=net.DialTimeout("tcp",ipAddress,time.Duration(Config.Timeout)*time.Millisecond)
 		if err != nil {
-			output = output + "Could not connect to " + ipAddress + " " + Server.Host + " " + err.Error() + "\n"
+			output = output + "CRITICAL Could not connect to " + ipAddress + " " + Server.Host + " " + err.Error() + "\n"
 			//fmt.Printf("Could not connect to %v - %v\n %v",ipAddress,Server.Domain,err)
 			switch state {
 			case STATE_OK:
@@ -115,7 +115,7 @@ func main() {
 		hsErr := conn.Handshake()
 		if hsErr != nil {
 			//fmt.Printf("Client connected to: %v\n", conn.RemoteAddr())
-			output = output + "Cert Failed for " + ipAddress + " " + Server.Domain + " " + hsErr.Error() + "\n"
+			output = output + "CRITICAL Cert Failed for " + ipAddress + " " + Server.Domain + " " + hsErr.Error() + "\n"
 			//fmt.Printf("Cert Failed for %v - %v\n %v\n", ipAddress, Server.Domain, hsErr)
 			switch state {
 			case STATE_OK:
@@ -128,7 +128,7 @@ func main() {
 			//os.Exit(state)
 		} else {
 			//fmt.Printf("Client connected to: %v\n", conn.RemoteAddr())
-			output = output + "Cert Checks " + Server.Domain + " - OK\n"
+			output = output + "OK Cert Checks " + Server.Domain + " is valid\n"
 			//fmt.Printf("Cert Checks OK\n")
 			//os.Exit(state)
 		}
