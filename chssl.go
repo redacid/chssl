@@ -150,7 +150,7 @@ func main() {
 				}
 				//os.Exit(state)
 			} else if timeNow.AddDate(0,0,Config.WarnDays).After(v.NotAfter) {
-				output = output + "WARNING Cert expired \n"
+				output = output + "WARNING Cert expired " + Server.Domain + " expired \n"
 				//fmt.Printf("WARNING Cert expired \n")
 				output = output + "CN: " + v.Subject.CommonName + " Expired " + v.NotAfter.Format("2006-01-02 15:04:05") + "\n"
 				//fmt.Printf("CN:%v To: %v\n", v.Subject.CommonName, v.NotAfter)
@@ -177,11 +177,11 @@ func main() {
 
 	switch state {
 	case STATE_OK:
-		fmt.Print("OK Certs of all domains")
+		fmt.Print("OK Certs of all domains\n")
 	case STATE_WARNING:
-		fmt.Print("WARNING Expired cert(s)")
+		fmt.Print("WARNING Expired cert(s)\n")
 	case STATE_CRITICAL:
-		fmt.Print("CRITICAL Expired cert(s)")
+		fmt.Print("CRITICAL Expired cert(s)\n")
 	}
 
 	fmt.Printf("%v",output)
