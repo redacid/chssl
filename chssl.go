@@ -18,10 +18,6 @@ const STATE_CRITICAL = 2
 const STATE_UNKNOWN = 3 //not used
 var state int=STATE_OK
 var output string=""
-const htmlred string="<font color=red>"
-const htmlgreen string="<font color=green>"
-const htmlyellow string="<font color=yellow>"
-const htmlend string="</font>"
 
 type Config struct {
 	Servers  []Server
@@ -139,9 +135,9 @@ func main() {
 		for _, v := range connstate.PeerCertificates {
 			timeNow := time.Now()
 			if timeNow.AddDate(0,0,Config.CritDays).After(v.NotAfter) {
-				output = output + htmlred + "CRITICAL Cert " + Server.Domain + " expired \n"
+				output = output + "CRITICAL Cert " + Server.Domain + " expired \n"
 				//fmt.Printf("CRITICAL Cert expired \n")
-				output = output + "CN: " + v.Subject.CommonName + " Expired " + v.NotAfter.Format("2006-01-02 15:04:05") + htmlend + "\n"
+				output = output + "CN: " + v.Subject.CommonName + " Expired " + v.NotAfter.Format("2006-01-02 15:04:05") + "\n"
 				//fmt.Printf("CN:%v To: %v\n", v.Subject.CommonName, v.NotAfter)
 				//fmt.Printf("CN:%v From: %v To: %v\n", v.Subject.CommonName, v.NotBefore, v.NotAfter)
 				switch state {
@@ -154,9 +150,9 @@ func main() {
 				}
 				//os.Exit(state)
 			} else if timeNow.AddDate(0,0,Config.WarnDays).After(v.NotAfter) {
-				output = output + htmlyellow + "WARNING Cert expired \n"
+				output = output + "WARNING Cert expired \n"
 				//fmt.Printf("WARNING Cert expired \n")
-				output = output + "CN: " + v.Subject.CommonName + " Expired " + v.NotAfter.Format("2006-01-02 15:04:05") + htmlend + "\n"
+				output = output + "CN: " + v.Subject.CommonName + " Expired " + v.NotAfter.Format("2006-01-02 15:04:05") + "\n"
 				//fmt.Printf("CN:%v To: %v\n", v.Subject.CommonName, v.NotAfter)
 				//fmt.Printf("CN:%v From: %v To: %v\n", v.Subject.CommonName, v.NotBefore, v.NotAfter)
 				switch state {
