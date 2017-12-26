@@ -69,6 +69,7 @@ func main() {
 		//fmt.Printf("Host: %v \n", Server.Host)
 		//fmt.Printf("Port: %v \n", Server.Port)
 		//output = output + "Domain: " + Server.Domain + "\n"
+		output = output + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
 		//fmt.Printf("Domain: %v \n", Server.Domain)
 
 		ip, err := net.LookupHost(Server.Host)
@@ -172,7 +173,9 @@ func main() {
 				//fmt.Printf("CN:%v From: %v To: %v\n", v.Subject.CommonName, v.NotBefore, v.NotAfter)
 				//os.Exit(state)
 			}
+
 		}
+
 	}
 
 	switch state {
