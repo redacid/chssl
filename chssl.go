@@ -2,7 +2,7 @@ package main
 
 import (
 	"crypto/tls"
-	"flag"
+	//"flag"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -11,11 +11,11 @@ import (
 	"encoding/json"
 )
 
-var runAs = filepath.Base(os.Args[0])
+//var runAs = filepath.Base(os.Args[0])
 const STATE_OK = 0
 const STATE_WARNING = 1
 const STATE_CRITICAL = 2
-const STATE_UNKNOWN = 3 //not used
+//const STATE_UNKNOWN = 3 //not used
 var state int=STATE_OK
 var output string=""
 
@@ -35,11 +35,11 @@ type Global struct {
 }
 
 // Usage is what is run if the right parameters are not met upon startup.
-func Usage() {
+/*func Usage() {
 	// To embed the bot user and password comment the line above and uncomment the line below
 	fmt.Printf("Usage: %v \n", runAs)
 	flag.PrintDefaults()
-}
+}*/
 
 func main() {
 
@@ -174,8 +174,18 @@ func main() {
 			}
 		}
 	}
+
+	switch state {
+	case STATE_OK:
+		fmt.Print("OK Certs of all domains")
+	case STATE_WARNING:
+		fmt.Print("WARNING Expired cert(s)")
+	case STATE_CRITICAL:
+		fmt.Print("CRITICAL Expired cert(s)")
+	}
+
 	fmt.Printf("%v",output)
-	fmt.Printf("EXITSTATE: %d\n", state)
+	//fmt.Printf("EXITSTATE: %d\n", state)
 	os.Exit(state)
 
 }
