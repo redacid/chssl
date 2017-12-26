@@ -150,7 +150,7 @@ func main() {
 				}
 				//os.Exit(state)
 			} else if timeNow.AddDate(0,0,Config.WarnDays).After(v.NotAfter) {
-				output = output + "WARNING Cert expired " + Server.Domain + " expired \n"
+				output = output + "WARNING Cert " + Server.Domain + " expired \n"
 				//fmt.Printf("WARNING Cert expired \n")
 				output = output + "CN: " + v.Subject.CommonName + " Expired " + v.NotAfter.Format("2006-01-02 15:04:05") + "\n"
 				//fmt.Printf("CN:%v To: %v\n", v.Subject.CommonName, v.NotAfter)
