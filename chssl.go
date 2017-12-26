@@ -183,9 +183,9 @@ func main() {
 	case STATE_OK:
 		fmt.Print("OK Certs of all domains is valid\n")
 	case STATE_WARNING:
-		fmt.Print("WARNING Expired cert(s) exists\n")
+		fmt.Print("WARNING Expired soon cert(s) exists\n")
 	case STATE_CRITICAL:
-		fmt.Print("CRITICAL Expired cert(s) exists\n")
+		fmt.Print("CRITICAL Expired soon cert(s) exists\n")
 	}
 
 	fmt.Printf("%v",output)
