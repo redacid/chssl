@@ -137,7 +137,7 @@ func main() {
 		for _, v := range connstate.PeerCertificates {
 			timeNow := time.Now()
 			if timeNow.AddDate(0,0,Config.CritDays).After(v.NotAfter) {
-				output = output + "CRITICAL Cert " + Server.Domain + " expired \n"
+				output = output + "CRITICAL Cert " + Server.Domain + " expired soon\n"
 				//fmt.Printf("CRITICAL Cert expired \n")
 				output = output + "CN: " + v.Subject.CommonName + " Expired " + v.NotAfter.Format("2006-01-02 15:04:05") + "\n"
 				//fmt.Printf("CN:%v To: %v\n", v.Subject.CommonName, v.NotAfter)
@@ -152,7 +152,7 @@ func main() {
 				}
 				//os.Exit(state)
 			} else if timeNow.AddDate(0,0,Config.WarnDays).After(v.NotAfter) {
-				output = output + "WARNING Cert " + Server.Domain + " expired \n"
+				output = output + "WARNING Cert " + Server.Domain + " expired soon\n"
 				//fmt.Printf("WARNING Cert expired \n")
 				output = output + "CN: " + v.Subject.CommonName + " Expired " + v.NotAfter.Format("2006-01-02 15:04:05") + "\n"
 				//fmt.Printf("CN:%v To: %v\n", v.Subject.CommonName, v.NotAfter)
@@ -181,11 +181,11 @@ func main() {
 
 	switch state {
 	case STATE_OK:
-		fmt.Print("OK Certs of all domains\n")
+		fmt.Print("OK Certs of all domains is valid\n")
 	case STATE_WARNING:
-		fmt.Print("WARNING Expired cert(s)\n")
+		fmt.Print("WARNING Expired cert(s) exists\n")
 	case STATE_CRITICAL:
-		fmt.Print("CRITICAL Expired cert(s)\n")
+		fmt.Print("CRITICAL Expired cert(s) exists\n")
 	}
 
 	fmt.Printf("%v",output)

@@ -4,13 +4,13 @@
       "host": "google.com.ua",
       "port": "443",
       "domain": "google.com.ua",
-      "skipVerify": true
+      "skipVerify": false
     },
     {
       "host": "bing.com",
       "port": "443",
       "domain": "bing.com",
-      "skipVerify": true
+      "skipVerify": false
     }
   ],
   "timeout": 5000,
