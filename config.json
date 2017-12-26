@@ -1,0 +1,17 @@
+{
+  "Servers": [
+    {
+      "host": "google.com.ua",
+      "port": "443",
+      "domain": "google.com.ua"
+    },
+    {
+      "host": "bing.com",
+      "port": "443",
+      "domain": "bing.com"
+    }
+  ],
+  "timeout": 5000,
+  "warnDays": 30,
+  "critDays": 5
+}
