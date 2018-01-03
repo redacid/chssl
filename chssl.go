@@ -118,6 +118,7 @@ func main() {
 		hsErr := conn.Handshake()
 		if hsErr != nil {
 			//fmt.Printf("Client connected to: %v\n", conn.RemoteAddr())
+			output = output + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
 			output = output + "CRITICAL Cert Failed for " + ipAddress + " " + Server.Domain + " " + hsErr.Error() + "\n"
 			//fmt.Printf("Cert Failed for %v - %v\n %v\n", ipAddress, Server.Domain, hsErr)
 			switch state {
@@ -132,6 +133,7 @@ func main() {
 		} else {
 			//fmt.Printf("Client connected to: %v\n", conn.RemoteAddr())
 			if Config.PrintOk {
+				output = output + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
 				output = output + "OK Cert Checks " + Server.Domain + " is valid\n"
 			}
 			//fmt.Printf("Cert Checks OK\n")
