@@ -71,12 +71,13 @@ func main() {
 		//fmt.Printf("Host: %v \n", Server.Host)
 		//fmt.Printf("Port: %v \n", Server.Port)
 		//output = output + "Domain: " + Server.Domain + "\n"
-		output = output + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+
 		//fmt.Printf("Domain: %v \n", Server.Domain)
 
 		ip, err := net.LookupHost(Server.Host)
 		if err != nil {
 			ipAddress = ipAddress + ":" + Server.Port
+			output = output + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
 			output = output + "CRITICAL Could not resolve host name " + Server.Host + "\n"
 			//fmt.Printf("Could not resolve host name, %v.\n\n",Server.Host)
 			switch state {
@@ -93,6 +94,7 @@ func main() {
 
 		ipConn,err:=net.DialTimeout("tcp",ipAddress,time.Duration(Config.Timeout)*time.Millisecond)
 		if err != nil {
+			output = output + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
 			output = output + "CRITICAL Could not connect to " + ipAddress + " " + Server.Host + " " + err.Error() + "\n"
 			//fmt.Printf("Could not connect to %v - %v\n %v",ipAddress,Server.Domain,err)
 			switch state {
