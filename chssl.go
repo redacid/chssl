@@ -33,6 +33,7 @@ type Global struct {
 	Timeout int `json:"timeout"`
 	WarnDays int `json:"warnDays"`
 	CritDays int `json:"critDays"`
+	PrintOk bool `json:"printOk"`
 }
 
 // Usage is what is run if the right parameters are not met upon startup.
@@ -128,7 +129,9 @@ func main() {
 			//os.Exit(state)
 		} else {
 			//fmt.Printf("Client connected to: %v\n", conn.RemoteAddr())
-			output = output + "OK Cert Checks " + Server.Domain + " is valid\n"
+			if Config.PrintOk {
+				output = output + "OK Cert Checks " + Server.Domain + " is valid\n"
+			}
 			//fmt.Printf("Cert Checks OK\n")
 			//os.Exit(state)
 		}
@@ -169,7 +172,9 @@ func main() {
 				//os.Exit(state)
 			} else {
 				//fmt.Printf("OK Cert not expired \n")
-				output = output + "CN: " + v.Subject.CommonName + " Expired " + v.NotAfter.Format("2006-01-02 15:04:05") + "\n"
+				if Config.PrintOk {
+					output = output + "CN: " + v.Subject.CommonName + " Expired " + v.NotAfter.Format("2006-01-02 15:04:05") + "\n"
+				}
 				//fmt.Printf("CN:%v To: %v\n", v.Subject.CommonName, v.NotAfter)
 				//fmt.Printf("CN:%v From: %v To: %v\n", v.Subject.CommonName, v.NotBefore, v.NotAfter)
 				//os.Exit(state)

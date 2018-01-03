@@ -15,5 +15,6 @@
   ],
   "timeout": 5000,
   "warnDays": 30,
-  "critDays": 5
+  "critDays": 5,
+  "printOk": true
 }
