@@ -47,7 +47,7 @@ func main() {
 
 	appdir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	if err != nil {
-		fmt.Printf("Could not open config.json , %v.\n\n",err)
+		fmt.Printf("[CRITICAL] Could not open config.json , %v.\n\n",err)
 		state = STATE_CRITICAL;
 		os.Exit(state)
 	}
@@ -58,7 +58,7 @@ func main() {
 	Config := new(Config)
 	err = decoder.Decode(&Config)
 	if err != nil {
-		fmt.Printf("ERROR: %v \n", err)
+		fmt.Printf("[CRITICAL] %v \n", err)
 		os.Exit(STATE_CRITICAL)
 	}
 	defer file.Close()
@@ -78,7 +78,7 @@ func main() {
 		if err != nil {
 			ipAddress = ipAddress + ":" + Server.Port
 			output = output + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-			output = output + "CRITICAL Could not resolve host name " + Server.Host + "\n"
+			output = output + "[CRITICAL] Could not resolve host name " + Server.Host + "\n"
 			//fmt.Printf("Could not resolve host name, %v.\n\n",Server.Host)
 			switch state {
 			case STATE_OK:
@@ -95,7 +95,7 @@ func main() {
 		ipConn,err:=net.DialTimeout("tcp",ipAddress,time.Duration(Config.Timeout)*time.Millisecond)
 		if err != nil {
 			output = output + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-			output = output + "CRITICAL Could not connect to " + ipAddress + " " + Server.Host + " " + err.Error() + "\n"
+			output = output + "[CRITICAL] Could not connect to " + ipAddress + " " + Server.Host + " " + err.Error() + "\n"
 			//fmt.Printf("Could not connect to %v - %v\n %v",ipAddress,Server.Domain,err)
 			switch state {
 			case STATE_OK:
@@ -119,7 +119,7 @@ func main() {
 		if hsErr != nil {
 			//fmt.Printf("Client connected to: %v\n", conn.RemoteAddr())
 			output = output + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-			output = output + "CRITICAL Cert Failed for " + ipAddress + " " + Server.Domain + " " + hsErr.Error() + "\n"
+			output = output + "[CRITICAL] Cert Failed for " + ipAddress + " " + Server.Domain + " " + hsErr.Error() + "\n"
 			//fmt.Printf("Cert Failed for %v - %v\n %v\n", ipAddress, Server.Domain, hsErr)
 			switch state {
 			case STATE_OK:
@@ -134,7 +134,7 @@ func main() {
 			//fmt.Printf("Client connected to: %v\n", conn.RemoteAddr())
 			if Config.PrintOk {
 				output = output + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-				output = output + "OK Cert Checks " + Server.Domain + " is valid\n"
+				output = output + "[OK] Cert Checks " + Server.Domain + " is valid\n"
 			}
 			//fmt.Printf("Cert Checks OK\n")
 			//os.Exit(state)
@@ -144,7 +144,7 @@ func main() {
 		for _, v := range connstate.PeerCertificates {
 			timeNow := time.Now()
 			if timeNow.AddDate(0,0,Config.CritDays).After(v.NotAfter) {
-				output = output + "CRITICAL Cert " + Server.Domain + " expired soon\n"
+				output = output + "[CRITICAL] Cert " + Server.Domain + " expired soon\n"
 				//fmt.Printf("CRITICAL Cert expired \n")
 				output = output + "CN: " + v.Subject.CommonName + " Expired " + v.NotAfter.Format("2006-01-02 15:04:05") + "\n"
 				//fmt.Printf("CN:%v To: %v\n", v.Subject.CommonName, v.NotAfter)
@@ -159,7 +159,7 @@ func main() {
 				}
 				//os.Exit(state)
 			} else if timeNow.AddDate(0,0,Config.WarnDays).After(v.NotAfter) {
-				output = output + "WARNING Cert " + Server.Domain + " expired soon\n"
+				output = output + "[WARNING] Cert " + Server.Domain + " expired soon\n"
 				//fmt.Printf("WARNING Cert expired \n")
 				output = output + "CN: " + v.Subject.CommonName + " Expired " + v.NotAfter.Format("2006-01-02 15:04:05") + "\n"
 				//fmt.Printf("CN:%v To: %v\n", v.Subject.CommonName, v.NotAfter)
@@ -190,11 +190,11 @@ func main() {
 
 	switch state {
 	case STATE_OK:
-		fmt.Print("OK Certs of all domains is valid\n")
+		fmt.Print("[OK] Certs of all domains is valid\n")
 	case STATE_WARNING:
-		fmt.Print("WARNING Expired soon cert(s) exists\n")
+		fmt.Print("[WARNING] Expired soon cert(s) exists\n")
 	case STATE_CRITICAL:
-		fmt.Print("CRITICAL Expired soon cert(s) exists\n")
+		fmt.Print("[CRITICAL] Expired soon cert(s) exists\n")
 	}
 
 	fmt.Printf("%v",output)
