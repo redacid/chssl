@@ -78,7 +78,7 @@ func main() {
 		if err != nil {
 			ipAddress = ipAddress + ":" + Server.Port
 			output = output + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-			output = output + "[CRITICAL] Could not resolve host name " + Server.Host + "\n"
+			output = output + "[CRITICAL] Could not resolve host name " + Server.Host +" "+ err.Error() +"\n"
 			//fmt.Printf("Could not resolve host name, %v.\n\n",Server.Host)
 			switch state {
 			case STATE_OK:
